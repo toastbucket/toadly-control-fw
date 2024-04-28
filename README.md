@@ -21,10 +21,9 @@ command:
 
 ```shell
 # initialize my-workspace for the control application
-west init -m git@github.com:toastbucket/toadly-control-fw.git --mr main control-ws
-# fix clone directory name
-# update Zephyr modules
-cd my-workspace
+mkdir ~/control-ws
+git clone git@github.com:toastbucket/toadly-control-fw.git application
+west init -l application
 west update
 ```
 
