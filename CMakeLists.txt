@@ -7,7 +7,9 @@
 
 # This is needed so that custom driver classes using system calls are taken into
 # account
-zephyr_syscall_include_directories(include)
+list(APPEND SYSCALL_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/include)
+set(SYSCALL_INCLUDE_DIRS ${SYSCALL_INCLUDE_DIRS} PARENT_SCOPE)
+#zephyr_syscall_include_directories(include)
 
 zephyr_include_directories(include)
 
