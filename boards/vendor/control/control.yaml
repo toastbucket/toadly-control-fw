@@ -1,9 +1,7 @@
-# Copyright (c) 2021 Nordic Semiconductor ASA
+# Copyright (c) 2024 Nick Elsmore
 # SPDX-License-Identifier: Apache-2.0
-
 identifier: control
-name: Control
-vendor: vendor
+name: Toadly Control
 type: mcu
 arch: arm
 ram: 32
@@ -13,4 +11,15 @@ toolchain:
   - gnuarmemb
   - xtools
 supported:
+  - adc
+  - counter
+  - dma
   - gpio
+  - i2c
+  - pwm
+  - spi
+  - uart
+  - usb_cdc
+  - usb_device
+  - watchdog
+vendor: vendor
