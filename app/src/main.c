@@ -7,7 +7,7 @@
 #include <zephyr/kernel.h>
 #include <zephyr/logging/log.h>
 
-
+#include <app/load_driver.h>
 #include <app_version.h>
 
 LOG_MODULE_REGISTER(main, CONFIG_APP_LOG_LEVEL);
@@ -20,6 +20,9 @@ int main(void)
 
 	printk("Toadly Control %s\n", APP_VERSION_STRING);
 
+	load_driver_init();
+
+#if 0
 	if (!device_is_ready(led.port)) {
 		printk("led not ready\n");
 		return;
@@ -33,8 +36,9 @@ int main(void)
 
 	while (1) {
 		gpio_pin_toggle_dt(&led);
-		k_sleep(K_MSEC(500));
+		k_sleep(K_MSEC(200));
 	}
+#endif
 
 	return 0;
 }

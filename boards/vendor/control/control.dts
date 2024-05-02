@@ -23,7 +23,7 @@
 	/* These aliases are provided for compatibility with samples */
 	aliases {
 		led0 = &led0;
-		sw0 = &user_button;
+		sw1 = &user_button;
 		i2c-0 = &sercom3;
 	};
 
@@ -43,6 +43,109 @@
 			zephyr,code = <INPUT_KEY_0>;
 		};
 	};
+
+	load_drivers {
+		compatible = "power-switch";
+		flood_d: flood_d {
+			gpios = <&porta 4 (GPIO_ACTIVE_HIGH)>;
+		};
+
+		flood_r: flood_r {
+			gpios = <&porta 5 (GPIO_ACTIVE_HIGH)>;
+		};
+
+		flood_p: flood_p {
+			gpios = <&porta 6 (GPIO_ACTIVE_HIGH)>;
+		};
+
+		comp_lgt_1: comp_lgt_1 {
+			gpios = <&portb 15 (GPIO_ACTIVE_HIGH)>;
+		};
+
+		comp_lgt_2: comp_lgt_2 {
+			gpios = <&porta 12 (GPIO_ACTIVE_HIGH)>;
+		};
+
+		comp_lgt_3: comp_lgt_3 {
+			gpios = <&porta 13 (GPIO_ACTIVE_HIGH)>;
+		};
+
+		comp_lgt_4: comp_lgt_4 {
+			gpios = <&porta 14 (GPIO_ACTIVE_HIGH)>;
+		};
+
+		comp_lgt_5: comp_lgt_5 {
+			gpios = <&porta 15 (GPIO_ACTIVE_HIGH)>;
+		};
+
+		marker_lgt: marker_lgt {
+			gpios = <&porta 10 (GPIO_ACTIVE_HIGH)>;
+		};
+
+		backup_chime: backup_chime {
+			gpios = <&porta 11 (GPIO_ACTIVE_HIGH)>;
+		};
+
+		fog_lgt: fog_lgt {
+			gpios = <&portb 10 (GPIO_ACTIVE_HIGH)>;
+		};
+
+		isect_d: isect_d {
+			gpios = <&portb 11 (GPIO_ACTIVE_HIGH)>;
+		};
+
+		isect_p: isect_p {
+			gpios = <&portb 12 (GPIO_ACTIVE_HIGH)>;
+		};
+
+		aux_1: aux_1 {
+			gpios = <&porta 7 (GPIO_ACTIVE_HIGH)>;
+		};
+
+		aux_2: aux_2 {
+			gpios = <&porta 8 (GPIO_ACTIVE_HIGH)>;
+		};
+
+		aux_3: aux_3 {
+			gpios = <&porta 9 (GPIO_ACTIVE_HIGH)>;
+		};
+
+		aux_4: aux_4 {
+			gpios = <&gpioexp0 0 (GPIO_ACTIVE_HIGH)>;
+		};
+
+		aux_5: aux_5 {
+			gpios = <&gpioexp0 1 (GPIO_ACTIVE_HIGH)>;
+		};
+
+		aux_6: aux_6 {
+			gpios = <&gpioexp0 2 (GPIO_ACTIVE_HIGH)>;
+		};
+
+		aux_7: aux_7 {
+			gpios = <&portb 13 (GPIO_ACTIVE_HIGH)>;
+		};
+
+		aux_8: aux_8 {
+			gpios = <&portb 14 (GPIO_ACTIVE_HIGH)>;
+		};
+
+		aux_9: aux_9 {
+			gpios = <&gpioexp0 3 (GPIO_ACTIVE_HIGH)>;
+		};
+
+		aux_10: aux_10 {
+			gpios = <&gpioexp0 4 (GPIO_ACTIVE_HIGH)>;
+		};
+
+		aux_11: aux_11 {
+			gpios = <&gpioexp0 5 (GPIO_ACTIVE_HIGH)>;
+		};
+
+		aux_12: aux_12 {
+			gpios = <&gpioexp0 6 (GPIO_ACTIVE_HIGH)>;
+		};
+	};
 };
 
 &cpu0 {
@@ -59,7 +162,7 @@
 	pinctrl-0 = <&sercom3_i2c_default>;
 	pinctrl-names = "default";
 
-	gpio_exp0: tca9538@70 {
+	gpioexp0: tca9538@70 {
 		compatible = "ti,tca9538";
 		reg = <0x70>;
 		gpio-controller;
