@@ -23,7 +23,6 @@
 	/* These aliases are provided for compatibility with samples */
 	aliases {
 		led0 = &led0;
-		sw1 = &user_button;
 		i2c-0 = &sercom3;
 	};
 
@@ -35,15 +34,95 @@
 		};
 	};
 
-	buttons {
+	switches {
 		/* inputs from sense circuits */
 		compatible = "gpio-keys";
-		park_brake: park_brake {
-			gpios = <&porta 15 GPIO_ACTIVE_LOW>;
+		sw_park_brake: sw_park_brake {
+			gpios = <&porta 17 GPIO_ACTIVE_HIGH>;
 		};
 
-		marker_light: marker_light {
-			gpios = <&porta 15 GPIO_ACTIVE_LOW>;
+		sw_marker_light: sw_marker_light {
+			gpios = <&porta 18 GPIO_ACTIVE_HIGH>;
+		};
+
+		sw_reverse_light: sw_reverse_light {
+			gpios = <&porta 20 GPIO_ACTIVE_HIGH>;
+		};
+
+		sw_stop_light: sw_stop_light {
+			gpios = <&porta 19 GPIO_ACTIVE_HIGH>;
+		};
+
+		sw_batt: sw_batt {
+			gpios = <&porta 2 GPIO_ACTIVE_HIGH>;
+		};
+
+		sw_horn: sw_horn {
+			gpios = <&porta 3 GPIO_ACTIVE_HIGH>;
+		};
+
+		sw_aux_1: sw_aux_1 {
+			gpios = <&portb 4 GPIO_ACTIVE_HIGH>;
+		};
+
+		sw_aux_2: sw_aux_2 {
+			gpios = <&portb 5 GPIO_ACTIVE_HIGH>;
+		};
+
+		sw_aux_3: sw_aux_3 {
+			gpios = <&porta 27 GPIO_ACTIVE_HIGH>;
+		};
+
+		sw_comp_1: sw_comp_1 {
+			gpios = <&portb 0 GPIO_ACTIVE_LOW>;
+		};
+
+		sw_comp_2: sw_comp_2 {
+			gpios = <&portb 1 GPIO_ACTIVE_LOW>;
+		};
+
+		sw_comp_3: sw_comp_3 {
+			gpios = <&portb 2 GPIO_ACTIVE_LOW>;
+		};
+
+		sw_comp_4: sw_comp_4 {
+			gpios = <&portb 3 GPIO_ACTIVE_LOW>;
+		};
+
+		sw_comp_5: sw_comp_5 {
+			gpios = <&portb 6 GPIO_ACTIVE_LOW>;
+		};
+
+		sw_cab_1: sw_cab_1 {
+			gpios = <&portb 7 GPIO_ACTIVE_LOW>;
+		};
+
+		sw_cab_2: sw_cab_2 {
+			gpios = <&portb 8 GPIO_ACTIVE_LOW>;
+		};
+
+		sw_cab_3: sw_cab_3 {
+			gpios = <&portb 9 GPIO_ACTIVE_LOW>;
+		};
+
+		sw_cab_4: sw_cab_4 {
+			gpios = <&portb 16 GPIO_ACTIVE_LOW>;
+		};
+
+		sw_cab_5: sw_cab_5 {
+			gpios = <&portb 17 GPIO_ACTIVE_LOW>;
+		};
+
+		sw_cab_6: sw_cab_6 {
+			gpios = <&porta 28 GPIO_ACTIVE_LOW>;
+		};
+
+		sw_cab_7: sw_cab_7 {
+			gpios = <&porta 24 GPIO_ACTIVE_LOW>;
+		};
+
+		sw_cab_8: sw_cab_8 {
+			gpios = <&porta 25 GPIO_ACTIVE_LOW>;
 		};
 	};
 
