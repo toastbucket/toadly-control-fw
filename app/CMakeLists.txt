@@ -11,5 +11,4 @@ project(app LANGUAGES C)
 
 target_sources(app PRIVATE
 	src/main.c
-	src/load_driver.c
 )
