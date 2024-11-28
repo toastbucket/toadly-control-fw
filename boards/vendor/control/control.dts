@@ -22,16 +22,13 @@
 
 	/* These aliases are provided for compatibility with samples */
 	aliases {
-		led0 = &led0;
 		i2c-0 = &sercom3;
 	};
 
-	leds {
-		compatible = "gpio-leds";
-		led0: led_0 {
-			gpios = <&portb 30 GPIO_ACTIVE_LOW>;
-			label = "User LED";
-		};
+	blink_led: blink-led {
+		compatible = "blink-gpio-led";
+		led-gpios = <&portb 30 GPIO_ACTIVE_LOW>;
+		blink-period-ms = <1000>;
 	};
 
 	switches {

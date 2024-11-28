@@ -164,8 +164,6 @@ int main(void)
 		return ret;
 	}
 
-	while (1);
-
 	return 0;
 }
 
