@@ -16,39 +16,64 @@
 
 LOG_MODULE_REGISTER(blink_gpio_led, CONFIG_BLINK_LOG_LEVEL);
 
+typedef enum {
+	BLINK_STATE_OFF,
+	BLINK_STATE_ON,
+} led_state_t;
+
 struct blink_gpio_led_data {
 	struct k_timer timer;
+	led_state_t state;
 };
 
 struct blink_gpio_led_config {
 	struct gpio_dt_spec led;
-	unsigned int period_ms;
+	unsigned int off_period_ms;
+	unsigned int on_period_ms;
 };
 
 static void blink_gpio_led_on_timer_expire(struct k_timer *timer)
 {
 	const struct device *dev = k_timer_user_data_get(timer);
 	const struct blink_gpio_led_config *config = dev->config;
+	struct blink_gpio_led_data *data = dev->data;
 	int ret;
+	unsigned int period_ms;
+
+	if (data->state == BLINK_STATE_OFF) {
+		data->state = BLINK_STATE_ON;
+		period_ms = config->on_period_ms;
+	} else {
+		data->state = BLINK_STATE_OFF;
+		period_ms = config->off_period_ms;
+	}
 
 	ret = gpio_pin_toggle_dt(&config->led);
 	if (ret < 0) {
-		LOG_ERR("Could not toggle LED GPIO (%d)", ret);
+		LOG_ERR("Could not set LED GPIO (%d)", ret);
 	}
+
+	k_timer_start(&data->timer, K_MSEC(period_ms), K_NO_WAIT);
 }
 
 static int blink_gpio_led_set_period_ms(const struct device *dev,
 					unsigned int period_ms)
 {
+#if 0
 	const struct blink_gpio_led_config *config = dev->config;
 	struct blink_gpio_led_data *data = dev->data;
+	int ret;
 
-	if (period_ms == 0) {
+	data->state = BLINK_STATE_OFF;
+	ret = gpio_pin_set_dt(&config->led, GPIO_OUTPUT_INACTIVE);
+	if (ret < 0)
+		return ret;
+
+	if (period_ms == 0)
 		k_timer_stop(&data->timer);
-		return gpio_pin_set_dt(&config->led, 0);
-	}
-
-	k_timer_start(&data->timer, K_MSEC(period_ms), K_MSEC(period_ms));
+	else
+		k_timer_start(&data->timer, K_MSEC(period_ms), K_NO_WAIT);
+#endif
 
 	return 0;
 }
@@ -68,6 +93,7 @@ static int blink_gpio_led_init(const struct device *dev)
 		return -ENODEV;
 	}
 
+	data->state = BLINK_STATE_OFF;
 	ret = gpio_pin_configure_dt(&config->led, GPIO_OUTPUT_INACTIVE);
 	if (ret < 0) {
 		LOG_ERR("Could not configure LED GPIO (%d)", ret);
@@ -77,9 +103,8 @@ static int blink_gpio_led_init(const struct device *dev)
 	k_timer_init(&data->timer, blink_gpio_led_on_timer_expire, NULL);
 	k_timer_user_data_set(&data->timer, (void *)dev);
 
-	if (config->period_ms > 0) {
-		k_timer_start(&data->timer, K_MSEC(config->period_ms),
-			      K_MSEC(config->period_ms));
+	if (config->on_period_ms > 0) {
+		k_timer_start(&data->timer, K_MSEC(config->off_period_ms), K_NO_WAIT);
 	}
 
 	return 0;
@@ -90,7 +115,8 @@ static int blink_gpio_led_init(const struct device *dev)
                                                                                \
 	static const struct blink_gpio_led_config config##inst = {             \
 	    .led = GPIO_DT_SPEC_INST_GET(inst, led_gpios),                     \
-	    .period_ms = DT_INST_PROP_OR(inst, blink_period_ms, 0U),           \
+	    .off_period_ms = DT_INST_PROP_OR(inst, blink_off_ms, 0U),          \
+	    .on_period_ms = DT_INST_PROP_OR(inst, blink_on_ms, 0U),            \
 	};                                                                     \
                                                                                \
 	DEVICE_DT_INST_DEFINE(inst, blink_gpio_led_init, NULL, &data##inst,    \

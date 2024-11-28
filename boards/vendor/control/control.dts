@@ -28,7 +28,8 @@
 	blink_led: blink-led {
 		compatible = "blink-gpio-led";
 		led-gpios = <&portb 30 GPIO_ACTIVE_LOW>;
-		blink-period-ms = <1000>;
+		blink-off-ms = <1400>;
+		blink-on-ms = <100>;
 	};
 
 	switches {
