@@ -25,21 +25,32 @@ mkdir ~/control-ws
 git clone git@github.com:toastbucket/toadly-control-fw.git application
 west init -l application
 west update
+west zephyr-export
 ```
 
 ### Building and running
-
 To build the application, run the following command:
 
 ```shell
 cd application
-west build -b atsamd21_xpro app
+west build -p auto -b control app
 ```
 
 Once you have built the application, run the following command to flash it:
 
 ```shell
 west flash
+```
+
+### Debugging
+Some basic debugging is available with gdb via west:
+```shell
+west debug
+```
+
+Logging can also be enabled via `prj.conf` by adding
+```
+CONFIG_LOG=y
 ```
 
 ### Testing
